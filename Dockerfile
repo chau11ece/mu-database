@@ -1,7 +1,11 @@
 FROM mcr.microsoft.com/mssql/server:2022-latest
+
+# Switch to root to create directories
 USER root
-# Create a folder for the backup
 RUN mkdir -p /var/opt/mssql/backup
-# Copy the backup file into the image
+# Copy your .bak file into the image so it's always available
 COPY MuOnline_Original.bak /var/opt/mssql/backup/
+
+# Set permissions back to mssql user
+RUN chown -R mssql /var/opt/mssql/backup
 USER mssql

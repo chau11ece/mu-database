@@ -1,11 +1,21 @@
 services:
-  mu-db:
-    image: mcr.microsoft.com/mssql/server:2022-latest
-    environment:
-      - ACCEPT_EULA=Y
-      - MSSQL_SA_PASSWORD=YourStrongPassword123!
+  mu_mssql:
+    image: chaudevops/mu-db:latest
+    container_name: mu_mssql
     ports:
       - "1433:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=MuOnline@DevOps2024!
     volumes:
-      - ./data:/var/opt/mssql/data # Keep your player data safe
-      
+      - mssql_data:/var/opt/mssql/data
+    networks:
+      - mu-network
+
+volumes:
+  mssql_data:
+
+networks:
+  mu-network:
+    external: true
+    
